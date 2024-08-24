@@ -3,29 +3,44 @@
 
 <html lang="ja">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Forum アプリケーション</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'forum/css/index.css' %}" />
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Forum アプリケーション</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'forum/css/index.css' %}" />
+    <!-- Bootstrap CSS を読み込む -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-    <body>
-        <h1>Forum</h1>
-        <h2>各掲示板へのリンク</h2>
-        <table>
-        {% for topic in topics %}
-        {% if topic != "Swift" and topic != "Kotlin" %}
-            <tr>
-                <th>
-                    {{ topic }}
-                </th>
-                <td>
-                    <a href="{% url 'forum:forum' topic %}">{{ topic }}の掲示板へ</a>
-                </td>
-            </tr>
-        {% endif %}
-        {% endfor %}
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Forum</h1>
+        <h2 class="mb-4">各掲示板へのリンク</h2>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">トピック</th>
+                    <th scope="col">リンク</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for topic in topics %}
+                {% if topic != "Swift" and topic != "Kotlin" %}
+                <tr>
+                    <td>{{ topic }}</td>
+                    <td>
+                        <a href="{% url 'forum:forum' topic %}" class="text-primary font-weight-bold">{{ topic }}の掲示板へ</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
         </table>
-    </body>
+    </div>
+
+    <!-- Bootstrap JS と依存するPopper.js, jQueryを読み込む -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 
 </html>
