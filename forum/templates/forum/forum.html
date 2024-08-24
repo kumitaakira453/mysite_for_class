@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+</head>
+<body>
+    <h1>掲示板</h1>
+    <h2>{{ topic.name }}</h2>
+    <table>
+        {% for message in messages %}
+            <tr>
+                <th>{{ message.content }}</th>
+                <th>{{ message.created_at }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="{% url 'forum:forum' topic.name %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="message">
+        <input type="submit" value="投稿">
+    </form>
+    <a href="{% url 'forum:index' %}">ホームへ</a>
+</body>
+</html>
