@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail</title>
+</head>
+<body>
+    <form action="{% url 'polls:vote' question.id %}" method="POST">  {# URL polls:vote に、question の id と form での処理（POST）を渡す #}
+    {% csrf_token %}  {# CSRF 対策（後に説明します）#}
+        <div>
+            <h1>{{ question.question_text }}</h1>
+
+            {% if error_message %}  {# もしエラーがあれば #}
+                <p><strong>{{ error_message }}</strong></p>  {# エラーを表示する #}
+            {% endif %}
+
+            {% for choice in question.choice_set.all %}  {# question の choice の数だけループする #}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">  {# ラジオボタン #}
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Vote">
+    </form>
+</body>
+</html>

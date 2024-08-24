@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls アプリケーション</title>
+</head>
+<body>
+    <h1>結果</h1>
+    <h2>調査項目</h2>
+    {% for question, answer in question_dict.items %}  {# dict 型の繰り返し処理 #}
+        <h3>Q. {{ question }}</h3>
+        {% if answer %}  {# 条件分岐 #}
+            <p>多くの人が「はい」と答えました。</p>
+        {% else %}
+            <p>多くの人が「いいえ」と答えました。</p>
+        {% endif %}  {# 条件分岐終わり #}
+    {% endfor %}  {# 繰り返し処理終わり #}
+    <a href="{% url 'index' %}">戻る</a>  {# index 関数を呼び出す #}
+</body>
+</html>
