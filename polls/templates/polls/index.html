@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Polls アプリケーション</title>
+    <!-- Bootstrap CSS を読み込む -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+    <div class="container mt-5">
+        {% if latest_question_list %}
+            <ul class="list-group">
+                {% for question in latest_question_list %}
+                    <li class="list-group-item">
+                        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                No polls are available.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS と依存するPopper.js, jQueryを読み込む -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

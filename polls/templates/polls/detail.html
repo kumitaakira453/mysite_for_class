@@ -4,23 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail</title>
+    <!-- Bootstrap CSS を読み込む -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <form action="{% url 'polls:vote' question.id %}" method="POST">  {# URL polls:vote に、question の id と form での処理（POST）を渡す #}
-    {% csrf_token %}  {# CSRF 対策（後に説明します）#}
-        <div>
-            <h1>{{ question.question_text }}</h1>
+    <div class="container mt-5">
+        <form action="{% url 'polls:vote' question.id %}" method="POST">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{ question.question_text }}</h1>
 
-            {% if error_message %}  {# もしエラーがあれば #}
-                <p><strong>{{ error_message }}</strong></p>  {# エラーを表示する #}
-            {% endif %}
+                    {% if error_message %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error_message }}</strong>
+                        </div>
+                    {% endif %}
 
-            {% for choice in question.choice_set.all %}  {# question の choice の数だけループする #}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">  {# ラジオボタン #}
-                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-            {% endfor %}
-        </div>
-        <input type="submit" value="Vote">
-    </form>
+                    <div class="form-group">
+                        {% for choice in question.choice_set.all %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                                <label class="form-check-label" for="choice{{ forloop.counter }}">
+                                    {{ choice.choice_text }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Vote</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS と依存するPopper.js, jQueryを読み込む -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
