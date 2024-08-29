@@ -1,13 +1,10 @@
-from typing import Any
-
 from django.db.models import Count, Max, OuterRef, Subquery
 from django.db.models.functions import Coalesce, Greatest
-from django.db.models.query import QuerySet
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.views import generic
 
 from .forms import CommentForm, MessageForm
-from .models import Comment, Message, Tag, Topic
+from .models import Comment, Message, Topic
 
 # def index(request):
 #     TOPIC_LIST = (
