@@ -10,16 +10,38 @@
     <h2>{{ topic.name }}</h2>
     <table>
         {% for message in messages %}
-            <tr>
-                <th>{{ message.content }}</th>
-                <th>{{ message.created_at }}</th>
-            </tr>
+            <form action="{% url "forum:forum" topic.name %}" method="POST" >
+                {% csrf_token %}
+                <tr>
+                    <th>{{ message.content }}</th>
+                    <th>{{ message.created_at }}</th>
+                </tr>
+                {% for tag in message.tag.all %}
+                    <tr>
+                        <th>{{tag.name}}</th>
+                    </tr>
+                    {% endfor %}
+                {% comment %} {% for comment in message.comment.all %}
+                    <tr>
+                        <th>{{comment.content}} </th>
+                        <th>{{comment.created_at}} </th>
+                    </tr>
+                {% endfor %} {% endcomment %}
+                <th>コメント数：{{ message.reply_num }}</th>
+                <th>最新コメント:{{message.latest_reply_date}} </th>
+                <tr>
+                    {% for field in comment_form %}
+                    <th>{{field}}</th>
+                    {% endfor %}
+                    <th><button type="submit" name="comment" value="{{message.id}}">コメント</button></th>
+                </tr>
+            </form>
         {% endfor %}
     </table>
     <form action="{% url 'forum:forum' topic.name %}" method="POST">
         {% csrf_token %}
-        <input type="text" name="message">
-        <input type="submit" value="投稿">
+        {{message_form}}
+        <button type"submit" name="message" value="value">送信</button>
     </form>
     <a href="{% url 'forum:index' %}">ホームへ</a>
 </body>

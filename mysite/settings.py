@@ -39,6 +39,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "polls",
     "forum",
+    "debug_toolbar",
+    "accounts",  # 追加
+    "django.contrib.sites",  # 追加
+    "allauth",  # 追加
+    "allauth.account",  # 追加
+    "allauth.socialaccount",  # 追加
 ]
 
 MIDDLEWARE = [
@@ -49,7 +55,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "allauth.account.middleware.AccountMiddleware",  # 追加
 ]
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 ROOT_URLCONF = "mysite.urls"
 
@@ -123,3 +135,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "forum:index"
+ACCOUNT_LOGOUT_REDIRECT_URL = "forum:index"
+ACCOUNT_LOGOUT_ON_GET = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = True
